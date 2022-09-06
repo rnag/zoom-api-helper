@@ -111,7 +111,7 @@ meetings in the Zoom Account.
     from datetime import datetime
 
     from zoom_api_helper import ZoomAPI
-    from zoom_api_helper.models import RowType
+    from zoom_api_helper.models import *
 
 
     def main():
@@ -122,7 +122,7 @@ meetings in the Zoom Account.
                              'Zoom Username': 'host_email'}
 
         # (optional) predicate function to initially process the row data
-        def process_row(row: RowType, dt_format='%Y-%m-%d %I:%M %p'):
+        def process_row(row: 'RowType', dt_format='%Y-%m-%d %I:%M %p'):
             start_time = f"{row['Meeting Date'][:10]} {row['Meeting Time']}"
 
             row.update(
@@ -134,7 +134,7 @@ meetings in the Zoom Account.
             return True
 
         # (optional) function to update row(s) with the API response
-        def update_row(row: RowType, resp: dict):
+        def update_row(row: 'RowType', resp: dict):
             row['Meeting URL'] = resp['join_url']
             row['Meeting ID'] = resp['id']
             row['Passcode'] = resp['password']

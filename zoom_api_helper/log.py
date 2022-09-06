@@ -1,5 +1,7 @@
+from __future__ import annotations
+
 from logging import NullHandler, basicConfig, getLogger, DEBUG, WARNING
-from typing import Union
+from typing import TYPE_CHECKING
 
 
 LOG = getLogger('zoom_api_helper')
@@ -8,12 +10,13 @@ LOG = getLogger('zoom_api_helper')
 # http://docs.python.org/3.3/howto/logging.html#configuring-logging-for-a-library
 LOG.addHandler(NullHandler())
 
-LEVEL_TYPE = Union[str, int]
+if TYPE_CHECKING:
+    LevelType = str | int
 
 
-def setup_logging(default_level: LEVEL_TYPE = DEBUG,
-                  lib_level: LEVEL_TYPE = DEBUG,
-                  urllib3_level: LEVEL_TYPE = WARNING):
+def setup_logging(default_level: LevelType = DEBUG,
+                  lib_level: LevelType = DEBUG,
+                  urllib3_level: LevelType = WARNING):
     """
     Sets up logging for application (user) code.
     """

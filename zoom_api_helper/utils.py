@@ -13,15 +13,17 @@ from csv import DictWriter
 from datetime import datetime
 from json import load, dump, JSONEncoder
 from time import time
-from typing import Any, TypeVar
+from typing import Any, TypeVar, TYPE_CHECKING
 
-from .log import LOG
+from functools import wraps
 
 try:
-    from functools import cached_property, wraps
+    from functools import cached_property
 except ImportError:
     # noinspection PyUnresolvedReferences, PyPackageRequirements
     from backports.cached_property import cached_property
+
+from .log import LOG
 
 
 class CustomEncoder(JSONEncoder):
@@ -33,7 +35,8 @@ class CustomEncoder(JSONEncoder):
         return JSONEncoder.default(self, o)
 
 
-_F = TypeVar('_F')
+if TYPE_CHECKING:
+    _F = TypeVar('_F')
 
 
 def log_time(func: _F) -> _F:

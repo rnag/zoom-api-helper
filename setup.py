@@ -14,6 +14,7 @@ packages = find_packages(include=[package_name, f'{package_name}.*'])
 requires = [
     'requests',
     'backports.cached-property~=1.0.2; python_version == "3.7"',
+    'typing-extensions; python_version == "3.7"',
 ]
 
 test_requirements = [

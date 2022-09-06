@@ -1,28 +1,35 @@
 __all__ = [
-    'RowType',
-    'ProcessRow',
-    'UpdateRow',
     'Meeting',
 ]
 
-from datetime import datetime
 from enum import Enum
-from typing import Protocol, Dict, Union, Any
+from typing import TYPE_CHECKING
 
 
-RowType = Dict[str, Union[str, datetime, bool, int, float, dict, list, None]]
+if TYPE_CHECKING:
+    __all__ += ['RowType', 'ProcessRow', 'UpdateRow']
+
+    from datetime import datetime
+    from typing import Any
+
+    try:
+        from typing import Protocol
+    except ImportError:  # Python 3.7
+        from typing_extensions import Protocol
+
+    RowType = dict[str, str | datetime | bool | int | float | dict | list | None]
 
 
-class ProcessRow(Protocol):
+    class ProcessRow(Protocol):
 
-    def __call__(self, row: RowType) -> bool:
-        ...
+        def __call__(self, row: RowType) -> bool:
+            ...
 
 
-class UpdateRow(Protocol):
+    class UpdateRow(Protocol):
 
-    def __call__(self, row: RowType, resp: dict[str, Any]) -> None:
-        ...
+        def __call__(self, row: RowType, resp: dict[str, Any]) -> None:
+            ...
 
 
 class Meeting(Enum):

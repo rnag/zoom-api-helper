@@ -7,7 +7,7 @@ from pathlib import Path
 import pytest
 
 from zoom_api_helper import ZoomAPI, setup_logging
-from zoom_api_helper.models import RowType
+from zoom_api_helper.models import *
 
 TEST_DIR = Path(__file__).parent
 
@@ -53,7 +53,7 @@ def test_create_bulk_meetings(zoom_client):
     col_name_to_kwarg = {'Group Name': 'agenda',
                          'Zoom Username': 'host_email'}
 
-    def process_row(row: RowType, dt_format='%Y-%m-%d %I:%M %p'):
+    def process_row(row: 'RowType', dt_format='%Y-%m-%d %I:%M %p'):
         start_time = f"{row['Meeting Date'][:10]} {row['Meeting Time']}"
 
         row.update(
@@ -64,7 +64,7 @@ def test_create_bulk_meetings(zoom_client):
 
         return True
 
-    def update_row(row: RowType, resp: dict):
+    def update_row(row: 'RowType', resp: dict):
         row['Meeting URL'] = resp['join_url']
         row['Meeting ID'] = resp['id']
         row['Passcode'] = resp['password']
