@@ -1,4 +1,5 @@
 """The setup script."""
+import itertools
 import pathlib
 
 from setuptools import setup, find_packages
@@ -10,12 +11,24 @@ package_name = 'zoom_api_helper'
 
 packages = find_packages(include=[package_name, f'{package_name}.*'])
 
-requires = [ ]
+requires = [
+    'requests',
+    'backports.cached-property~=1.0.2; python_version == "3.7"',
+]
 
 test_requirements = [
     'pytest~=7.0.1',
     'pytest-cov~=3.0.0',
-    'pytest-runner~=5.3.1',]
+    'pytest-runner~=5.3.1',
+]
+
+extras_require = {
+   'excel': ['sheet2dict'],
+}
+
+# Ref: https://stackoverflow.com/a/71166228/10237506
+extras_require['all'] = list(itertools.chain.from_iterable(extras_require.values()))
+
 
 about = {}
 exec((here / package_name / '__version__.py').read_text(), about)
@@ -41,17 +54,15 @@ setup(
     },
     license=about['__license__'],
     # TODO add more relevant keywords as needed
-    keywords=['zoom-api-helper'],
+    keywords=['zoom-api-helper', 'zoom', 'api', 'zoom-api', 'api-v2'],
     classifiers=[
         # Ref: https://pypi.org/classifiers/
-        # 'Development Status :: 5 - Production/Stable',
-        'Development Status :: 2 - Pre-Alpha',
+        'Development Status :: 5 - Production/Stable',
         'Intended Audience :: Developers',
         'License :: OSI Approved :: MIT License',
         'Natural Language :: English',
         'Programming Language :: Python :: 3 :: Only',
         'Programming Language :: Python :: 3',
-        'Programming Language :: Python :: 3.6',
         'Programming Language :: Python :: 3.7',
         'Programming Language :: Python :: 3.8',
         'Programming Language :: Python :: 3.9',
@@ -59,6 +70,7 @@ setup(
         'Programming Language :: Python'
 ],
     test_suite='tests',
+    extras_require=extras_require,
     tests_require=test_requirements,
     zip_safe=False
 )

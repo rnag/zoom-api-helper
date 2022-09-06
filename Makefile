@@ -27,7 +27,7 @@ help:
 	@python -c "$$PRINT_HELP_PYSCRIPT" < $(MAKEFILE_LIST)
 
 init: ## install all dev dependencies for this project
-	pip install -e .
+	pip install -e .[all]
 	pip install -r requirements-dev.txt
 
 clean: clean-build clean-pyc clean-test ## remove all build, test, coverage and Python artifacts
@@ -57,6 +57,9 @@ lint: ## check style with flake8 and pylint
 
 test: ## run unit tests quickly with the default Python
 	pytest -v --cov=zoom_api_helper --cov-report=term-missing tests/unit
+
+int: ## run integration tests quickly with the default Python
+	pytest -v --cov=zoom_api_helper --cov-report=term-missing tests/integration
 
 test-all: ## run tests on every Python version with tox
 	tox

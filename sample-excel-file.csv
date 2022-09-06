@@ -1,0 +1,4 @@
+﻿Group Name,Zoom Username,Topic,Meeting Date,Meeting Time,Duration Hr,Duration Min,Meeting URL,Meeting ID,Passcode
+A-BC:TEST:Sample Group 1,host1@email.com,TEST Meeting #1: Just an example,10/26/25,3:30 PM,1,30,,,
+A-BC:TEST:Sample Group 2,host1@email.com,TEST Meeting #2: Here's another one,11/27/25,7:00 PM,1,0,,,
+A-BC:TEST:Sample Group 3,host2@email.com,TEST Meeting #3: This is the last for now,9/29/25,9:00 PM,1,15,,,
