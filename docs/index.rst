@@ -1,5 +1,5 @@
 Welcome to Zoom API Helper's documentation!
-======================================
+===========================================
 
 .. toctree::
    :maxdepth: 2

@@ -20,7 +20,6 @@ requires = [
 test_requirements = [
     'pytest~=7.1.3',
     'pytest-cov~=3.0.0',
-    'pytest-runner~=6.0.0',
 ]
 
 extras_require = {

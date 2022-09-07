@@ -1,3 +1,5 @@
+"""Project-specific constant values."""
+
 __all__ = [
     'API_USERS',
     'CACHE_DIR',
@@ -11,7 +13,6 @@ from pathlib import Path
 API_USERS = 'https://api.zoom.us/v2/users'
 
 # Cache Directory
-
 CACHE_DIR = Path(getenv('CACHE_DIR', '~/.zoom/cache')).expanduser()
 
 # Create Cache Directory if needed.

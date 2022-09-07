@@ -96,15 +96,15 @@ Local Storage
 
 This library uses a local storage for cache purposes, located under
 the user home directory at ``~/.zoom/cache`` by default -- though this
-can location be customized, via the ``CACHE_DIR`` environment variable.
+location can be customized, via the ``CACHE_DIR`` environment variable.
 
 The format of the filenames containing cached data will look something similar to this::
 
     {{ Purpose }}_{{ Zoom Account ID }}_{{ Zoom Client ID }}.json
 
-Currently, the helper library utilizes the file cache for two purposes:
+Currently, the helper library utilizes a local file cache for two purposes:
 
-* Storing the access token retrieved from the OAuth step, so that the token
+* Storing the access token retrieved from `the OAuth step`_, so that the token
   only needs to be refreshed after *~1 hour*.
 
 * Storing a cached mapping of Zoom User emails to User IDs, as generally
@@ -113,16 +113,19 @@ Currently, the helper library utilizes the file cache for two purposes:
   * As otherwise, retrieving this mapping from the API can sometimes
     be expensive, especially for Zoom accounts that have a lot of Users (1000+).
 
+.. _`the OAuth step`: https://marketplace.zoom.us/docs/guides/build/server-to-server-oauth-app/#use-account-credentials-to-get-an-access-token
 
 Bulk Create Meetings
 --------------------
 
 In order to *bulk create meetings* -- for example, if you need to create 100+
-meetings in a short span of time -- use the ``ZoomAPI.bulk_create_meetings()``
+meetings in a short span of time -- use the ``ZoomAPI``'s `bulk_create_meetings()`_
 method.
 
 This allows you to pass in an Excel (*.xlsx*) file containing the meetings to
 create, or else pass in the ``rows`` with the meeting info directly.
+
+.. _`bulk_create_meetings()`: https://zoom-api-helper.readthedocs.io/en/latest/zoom_api_helper.html#zoom_api_helper.v2.ZoomAPI.bulk_create_meetings
 
 Example
 ~~~~~~~
@@ -165,7 +168,7 @@ meetings in the Zoom Account.
 
             row.update(
                 start_time=datetime.strptime(start_time, dt_format),
-                # Zoom expects the `duration` value in seconds.
+                # Zoom expects the `duration` value in minutes.
                 duration=int(row['Duration Hr']) * 60 + int(row['Duration Min']),
             )
 

@@ -17,12 +17,14 @@ from .utils import *
 
 
 class ZoomAPI:
+    # noinspection GrazieInspection
     """
     Helper client to interact with the `Zoom API v2`_
 
     .. _Zoom API v2: https://marketplace.zoom.us/docs/api-reference/zoom-api/
 
     """
+
     __slots__ = (
         # required for `@cached_property`
         '__dict__',
@@ -90,7 +92,7 @@ class ZoomAPI:
                              out_file: str | os.PathLike[str] = None,
                              default_timezone='UTC',
                              dry_run=False):
-
+        # noinspection GrazieInspection
         """``POST /users/{userId}/meetings``: Use this API to *bulk*-create meetings, given
         a list of meetings to create.
 
@@ -104,27 +106,27 @@ class ZoomAPI:
 
             $ pip install zoom-api-helper[excel]
 
-        `col_header_to_kwarg` is a mapping of column headers to keyword arguments,
+        ``col_header_to_kwarg`` is a mapping of column headers to keyword arguments,
         as accepted by the :meth:`create_meeting` method. If the header names are
         all title-cased versions of the keyword arguments, then this argument does
-        *not* need to be passed in.
+        *not* need to be passed in. See also, :attr:`constants.CREATE_MEETING_KWARGS`
+        for a full list of acceptable keywords for the *Create Meeting* API; note
+        that these are specified as *values* in the key-value pairing.
 
-        `process_row` is an optional function or callable that will be called with
+        ``process_row`` is an optional function or callable that will be called with
         a copy of each *row*, or individual meeting info. The function can modify
         the row in place as desired.
 
-        `update_row` is an optional function or callable that will be called with
+        ``update_row`` is an optional function or callable that will be called with
         the HTTP response data from the Create Meetings API, and the associated
         row from the Excel file. The function can modify the row in place as desired.
 
-        If `dry_run` is enabled, then no API calls will be made, and this function
+        If ``dry_run`` is enabled, then no API calls will be made, and this function
         will essentially be a no-op; however, useful logging output is printed for
         debugging purposes. Enable this parameter along with the :func:`setup_logging`
         helper function, in a debug environment.
 
-        ============
-        How It Works
-        ============
+        **How It Works**
 
         This function scans in a list of rows containing a list of meetings
         to create, either from a local file or from the ``rows`` parameter.
@@ -137,14 +139,13 @@ class ZoomAPI:
         ``{excel-file-name-without-ext}}.out.csv`` if an output filepath
         is not specified.
 
-        ==========
-        References
-        ==========
+        **References**
 
-        https://marketplace.zoom.us/docs/api-reference/zoom-api/methods/#operation/meetingCreate
+        API documentation:
+            - https://marketplace.zoom.us/docs/api-reference/zoom-api/methods/#operation/meetingCreate
 
-        If a naive `datetime` object is provided for `start_time` or any other field
-        (i.e. one with no timezone information) the value for`timezone` will determine
+        If a naive `datetime` object is provided for ``start_time`` or any other field
+        (i.e. one with no timezone information) the value for ``timezone`` will determine
         which timezone to associate with the `datetime` object - defaults to *UTC* time
         if not specified.
 
@@ -218,10 +219,10 @@ class ZoomAPI:
 
         LOG.debug('Output File: %s', out_file.absolute())
 
-        def create_meeting(row_: RowType):
+        def create_meeting(mtg_: RowType):
             # use a separate session for each thread.
             session = self._new_session()
-            return self.create_meeting(session=session, **row_)
+            return self.create_meeting(session=session, **mtg_)
 
         if update_row is None:
             update_row = dict.update
@@ -318,6 +319,7 @@ class ZoomAPI:
         return email_to_id
 
     def list_users(self, status: str | None = 'active', page_size=300, page=1, all_pages=True):
+        # noinspection GrazieInspection
         """``GET /users``: Use this API to list your account's users.
 
         Ref:

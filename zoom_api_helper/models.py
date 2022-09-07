@@ -6,6 +6,7 @@ from enum import Enum
 from typing import TYPE_CHECKING
 
 
+# noinspection GrazieInspection
 if TYPE_CHECKING:
     __all__ += ['RowType', 'ProcessRow', 'UpdateRow']
 
@@ -17,6 +18,11 @@ if TYPE_CHECKING:
     except ImportError:  # Python 3.7
         from typing_extensions import Protocol
 
+    # Type of Excel Row.
+    #
+    # Typically, `sheet2dict` passes this in as `dict[str, str]`, however the
+    # type restrictions can be lifted a little, so that a user assignment
+    # won't result in warnings.
     RowType = dict[str, str | datetime | bool | int | float | dict | list | None]
 
 
