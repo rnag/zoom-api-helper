@@ -22,12 +22,11 @@ Zoom API Helper
      :alt: Updates
 
 
-Utilities to interact with the Zoom API v2
+Utilities to interact with the `Zoom API v2`_
 
 
 * Free software: MIT license
 * Documentation: https://zoom-api-helper.readthedocs.io.
-* Zoom API Docs: https://marketplace.zoom.us/docs/api-reference/zoom-api.
 
 Installation
 ------------
@@ -46,10 +45,6 @@ Features
 * `Zoom API v2`_: List users, create meetings, and bulk create meetings.
 * Support for a `Server-to-Server OAuth`_ flow.
 * Local caching of access token retrieved from OAuth process.
-
-.. _Server-to-Server OAuth: https://marketplace.zoom.us/docs/guides/build/server-to-server-oauth-app/
-.. _Zoom API v2: https://marketplace.zoom.us/docs/api-reference/introduction/
-
 
 Quickstart
 ----------
@@ -200,7 +195,9 @@ Credits
 
 This package was created with Cookiecutter_ and the `rnag/cookiecutter-pypackage`_ project template.
 
-.. _Cookiecutter: https://github.com/cookiecutter/cookiecutter
-.. _`rnag/cookiecutter-pypackage`: https://github.com/rnag/cookiecutter-pypackage
+.. _Zoom API v2: https://marketplace.zoom.us/docs/api-reference/introduction/
+.. _Server-to-Server OAuth: https://marketplace.zoom.us/docs/guides/build/server-to-server-oauth-app/
 .. _on PyPI: https://pypi.org/project/zoom-api-helper/
 .. _in the docs: https://marketplace.zoom.us/docs/guides/build/server-to-server-oauth-app/
+.. _Cookiecutter: https://github.com/cookiecutter/cookiecutter
+.. _`rnag/cookiecutter-pypackage`: https://github.com/rnag/cookiecutter-pypackage
