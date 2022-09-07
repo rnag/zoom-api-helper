@@ -13,7 +13,7 @@ from csv import DictWriter
 from datetime import datetime
 from json import load, dump, JSONEncoder
 from time import time
-from typing import Any, TypeVar, TYPE_CHECKING
+from typing import TYPE_CHECKING, Any, TypeVar
 
 from functools import wraps
 

@@ -27,14 +27,25 @@ Utilities to interact with the Zoom API v2
 
 * Free software: MIT license
 * Documentation: https://zoom-api-helper.readthedocs.io.
+* Zoom API Docs: https://marketplace.zoom.us/docs/api-reference/zoom-api.
 
+Installation
+------------
+
+The Zoom API Helper library is available `on PyPI`_, and can be installed with ``pip``:
+
+.. code-block:: shell
+
+    $ pip install zoom-api-helper
+
+You'll also need to create a Server-to-Server OAuth app as outlined `in the docs`_.
 
 Features
 --------
 
 * `Zoom API v2`_: List users, create meetings, and bulk create meetings.
-* Support for a `Server-to-Server OAuth`_ workflow.
-* Local caching of access token retrieved from OAuth.
+* Support for a `Server-to-Server OAuth`_ flow.
+* Local caching of access token retrieved from OAuth process.
 
 .. _Server-to-Server OAuth: https://marketplace.zoom.us/docs/guides/build/server-to-server-oauth-app/
 .. _Zoom API v2: https://marketplace.zoom.us/docs/api-reference/introduction/
@@ -43,9 +54,8 @@ Features
 Quickstart
 ----------
 
-First, create a client to use for interacting with the `Zoom API v2`_. Note, that
-this requires setting up a `Server-to-Server OAuth`_ app beforehand.
-
+Start by creating a helper
+client (``ZoomAPI``) to interact with the Zoom API:
 
 .. code-block:: python
 
@@ -81,6 +91,29 @@ Create an individual meeting via ``ZoomAPI.create_meeting()``:
 To *bulk create* a list of meetings in a concurrent fashion, please see the
 section on `Bulk Create Meetings`_ below.
 
+Local Storage
+-------------
+
+This library uses a local storage for cache purposes, located under
+the user home directory at ``~/.zoom/cache`` by default -- though this
+can location be customized, via the ``CACHE_DIR`` environment variable.
+
+The format of the filenames containing cached data will look something similar to this::
+
+    {{ Purpose }}_{{ Zoom Account ID }}_{{ Zoom Client ID }}.json
+
+Currently, the helper library utilizes the file cache for two purposes:
+
+* Storing the access token retrieved from the OAuth step, so that the token
+  only needs to be refreshed after *~1 hour*.
+
+* Storing a cached mapping of Zoom User emails to User IDs, as generally
+  the Zoom APIs only require the User ID's.
+
+  * As otherwise, retrieving this mapping from the API can sometimes
+    be expensive, especially for Zoom accounts that have a lot of Users (1000+).
+
+
 Bulk Create Meetings
 --------------------
 
@@ -96,10 +129,15 @@ Example
 
 Suppose you have an Excel file (``meeting-info.xlsx``) with the following data:
 
-.. csv-table:: Example File ``meeting-info.xlsx``
-   :file: ./sample-excel-file.csv
-   :widths: 20, 20, 30, 10, 10, 3, 4, 1, 1, 1
-   :header-rows: 1
++---------------------------+------------------+--------------------------------------------+---------------+---------------+--------------+---------------+--------------+-------------+-----------+
+| Group Name                | Zoom Username    | Topic                                      | Meeting Date  | Meeting Time  | Duration Hr  | Duration Min  | Meeting URL  | Meeting ID  | Passcode  |
++===========================+==================+============================================+===============+===============+==============+===============+==============+=============+===========+
+| A-BC:TEST:Sample Group 1  | host1@email.com  | TEST Meeting #1: Just an example           | 10/26/25      | 3:30 PM       | 1            | 30            |              |             |           |
++---------------------------+------------------+--------------------------------------------+---------------+---------------+--------------+---------------+--------------+-------------+-----------+
+| A-BC:TEST:Sample Group 2  | host1@email.com  | TEST Meeting #2: Here's another one        | 11/27/25      | 7:00 PM       | 1            | 0             |              |             |           |
++---------------------------+------------------+--------------------------------------------+---------------+---------------+--------------+---------------+--------------+-------------+-----------+
+| A-BC:TEST:Sample Group 3  | host2@email.com  | TEST Meeting #3: This is the last for now  | 9/29/25       | 9:00 PM       | 1            | 15            |              |             |           |
++---------------------------+------------------+--------------------------------------------+---------------+---------------+--------------+---------------+--------------+-------------+-----------+
 
 Then, here is a sample code that would allow you to *bulk create* the specified
 meetings in the Zoom Account.
@@ -142,7 +180,7 @@ meetings in the Zoom Account.
         # create meetings with dry run enabled.
         zoom.bulk_create_meetings(
             col_name_to_kwarg,
-            excel_file='./[DUMMY] Zoom Meeting Information.xlsx',
+            excel_file='./meeting-info.xlsx',
             default_timezone='America/New_York',
             process_row=process_row,
             update_row=update_row,
@@ -161,3 +199,5 @@ This package was created with Cookiecutter_ and the `rnag/cookiecutter-pypackage
 
 .. _Cookiecutter: https://github.com/cookiecutter/cookiecutter
 .. _`rnag/cookiecutter-pypackage`: https://github.com/rnag/cookiecutter-pypackage
+.. _on PyPI: https://pypi.org/project/zoom-api-helper/
+.. _in the docs: https://marketplace.zoom.us/docs/guides/build/server-to-server-oauth-app/

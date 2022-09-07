@@ -4,13 +4,15 @@ __all__ = [
     'CREATE_MEETING_KWARGS',
 ]
 
+from os import getenv
 from pathlib import Path
 
 
 API_USERS = 'https://api.zoom.us/v2/users'
 
 # Cache Directory
-CACHE_DIR = Path('~/.zoom/cache').expanduser()
+
+CACHE_DIR = Path(getenv('CACHE_DIR', '~/.zoom/cache')).expanduser()
 
 # Create Cache Directory if needed.
 CACHE_DIR.mkdir(parents=True, exist_ok=True)
