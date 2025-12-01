@@ -9,4 +9,4 @@ Sphinx==9.0.1
 twine==6.2.0
 # Test requirements
 pytest==9.0.1
-pytest-cov==3.0.0
+pytest-cov==7.0.0
